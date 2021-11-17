@@ -7,7 +7,7 @@ import lombok.SneakyThrows;
 
 import java.util.Set;
 
-public class ReadExelConcurrency implements Runnable {
+public class ReadExelConcurrency extends Thread {
 
     @Getter private String fileName;
     @Getter private Set<User> users;
@@ -22,7 +22,10 @@ public class ReadExelConcurrency implements Runnable {
     @Override
     public void run() {
         GetData getData = new GetData();
+        System.out.printf("%s started... \n", Thread.currentThread().getName());
 
-        users = getData.parsExelData(fileName);
+        if (!isInterrupted()){
+            users = getData.parsExelData(fileName);
+        }
     }
 }

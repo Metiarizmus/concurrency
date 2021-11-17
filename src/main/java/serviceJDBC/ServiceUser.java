@@ -13,7 +13,7 @@ public class ServiceUser {
 
     private PropertyInf propertyInf = new PropertyInf();
 
-    public boolean addUserInDB(User user) {
+    public void addUserInDB(User user) {
 
         try (Connection connection = DBConnection.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(propertyInf.getProperties(СhoiceProperties.SQL).getProperty("INSERT_USER"))) {
@@ -24,14 +24,14 @@ public class ServiceUser {
                 for (String value : s) {
                     statement.setString(k++, value);
                 }
-                int n = statement.executeUpdate();
-                if (n > 0)
-                    return true;
+
+                statement.addBatch();
+                statement.executeBatch();
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return false;
+
     }
 
 
