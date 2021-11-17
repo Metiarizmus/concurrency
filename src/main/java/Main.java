@@ -3,12 +3,15 @@ import entity.User;
 import entity.СhoiceProperties;
 import helper.GetData;
 import myThread.ReadExelConcurrency;
+import serviceJDBC.ServiceUser;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Main {
     private static GetData getFiles = new GetData();
@@ -47,12 +50,25 @@ public class Main {
         List<Set<User>> userList = new ArrayList<>();
         for (int i = 0; i < listFile.size(); i++) {
             userList.add(tasks.get(i).getUsers());
-
         }
+
+        //------------------------------------------------//
+
+        Set<User> users = new HashSet<>();//without duplicate
 
         for (Set<User> q : userList) {
-            System.out.println(q);
+            for (User qq : q){
+                users.add(qq);
+            }
         }
+
+        ServiceUser serviceUser = new ServiceUser();
+
+        for (User q : users) {
+            serviceUser.addUserInDB(q);
+        }
+
+
 
     }
 }

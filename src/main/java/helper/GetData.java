@@ -28,7 +28,7 @@ public class GetData {
     }
 
     public Set<User> parsExelData(String pathToExelFile) throws IOException {
-        Set<User> list = new HashSet<>();
+        Set<User> userSet = new HashSet<>();
 
         // Read XSL file
         FileInputStream inputStream = new FileInputStream(new File(pathToExelFile));
@@ -48,14 +48,14 @@ public class GetData {
             User user = new User(String.valueOf(row.getCell(0)), String.valueOf(row.getCell(1)), String.valueOf(row.getCell(2)),
                                  String.valueOf(row.getCell(3)));
 
-            list.add(user);
+            userSet.add(user);
 
         }
 
         User deleted = new User("ФИО", "Адрес", "Номер телефона", "З\\П");
 
-        list.remove(deleted);
-        return list;
+        userSet.remove(deleted);
+        return userSet;
     }
 
 
