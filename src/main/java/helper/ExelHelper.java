@@ -10,7 +10,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
 
-public class GetData {
+public class ExelHelper {
 
     public List<String> listFilesForFolder(File pathToFolder) {
         List<String> listFileName = new ArrayList<>();
@@ -46,7 +46,7 @@ public class GetData {
             Row row = rowIterator.next();
             // Get iterator to all cells of current row
             User user = new User(String.valueOf(row.getCell(0)), String.valueOf(row.getCell(1)), String.valueOf(row.getCell(2)),
-                                 String.valueOf(row.getCell(3)));
+                    String.valueOf(row.getCell(3)));
 
             userSet.add(user);
 
@@ -55,6 +55,7 @@ public class GetData {
         User deleted = new User("ФИО", "Адрес", "Номер телефона", "З\\П");
 
         userSet.remove(deleted);
+
         return userSet;
     }
 

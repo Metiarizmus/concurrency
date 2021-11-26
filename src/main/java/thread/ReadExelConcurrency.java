@@ -1,7 +1,7 @@
-package myThread;
+package thread;
 
 import entity.User;
-import helper.GetData;
+import helper.ExelHelper;
 import lombok.Getter;
 import lombok.SneakyThrows;
 
@@ -21,11 +21,11 @@ public class ReadExelConcurrency extends Thread {
     @SneakyThrows
     @Override
     public void run() {
-        GetData getData = new GetData();
+        ExelHelper exelHelper = new ExelHelper();
         System.out.printf("%s started... \n", Thread.currentThread().getName());
 
         if (!isInterrupted()){
-            users = getData.parsExelData(fileName);
+            users = exelHelper.parsExelData(fileName);
         }
     }
 }

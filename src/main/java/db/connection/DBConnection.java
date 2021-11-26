@@ -1,8 +1,8 @@
-package DBConnection;
+package db.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import entity.СhoiceProperties;
+import enums.СhoiceProperties;
 
 public class DBConnection {
 

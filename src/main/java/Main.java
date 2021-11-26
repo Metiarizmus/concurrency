@@ -1,9 +1,9 @@
-import DBConnection.PropertyInf;
+import db.connection.PropertyInf;
 import entity.User;
-import entity.СhoiceProperties;
-import helper.GetData;
-import myThread.ReadExelConcurrency;
-import serviceJDBC.ServiceUser;
+import enums.СhoiceProperties;
+import helper.ExelHelper;
+import thread.ReadExelConcurrency;
+import service.jdbc.ServiceUser;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Main {
-    private static final GetData getFiles = new GetData();
+    private static final ExelHelper getFiles = new ExelHelper();
     private static final PropertyInf propertyInf = new PropertyInf();
     private static final String path = propertyInf.getProperties(СhoiceProperties.PATH).getProperty("PATH_TO_FOLDER");
 
@@ -35,21 +35,23 @@ public class Main {
             t.start();
             tasks.add(task);
             threads.add(t);
-
         }
 
+        //threads.get(1).stop();
 
         for (int i = 0; i < listFile.size(); i++) {
+
             try {
                 if (!threads.get(i).isInterrupted()) {
                     threads.get(i).join();
-                }else {
+                } else {
                     System.out.println(threads.get(i).getName() + " has been interrupted");
                 }
             } catch (InterruptedException w) {
                 System.out.println(w);
             }
         }
+
 
         List<Set<User>> userList = new ArrayList<>();
         for (int i = 0; i < listFile.size(); i++) {
@@ -66,10 +68,14 @@ public class Main {
             }
         }
 
+        List<User> usersList = new ArrayList<>(users);
+
         ServiceUser serviceUser = new ServiceUser();
 
+        serviceUser.addUserInDB(usersList);
+
         for (User q : users) {
-            serviceUser.addUserInDB(q);
+            System.out.println(q);
         }
 
 

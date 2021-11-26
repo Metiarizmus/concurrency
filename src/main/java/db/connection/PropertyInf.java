@@ -1,6 +1,6 @@
-package DBConnection;
+package db.connection;
 
-import entity.СhoiceProperties;
+import enums.СhoiceProperties;
 
 import java.io.IOException;
 import java.io.InputStream;
